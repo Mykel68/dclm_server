@@ -13,6 +13,7 @@ const reportSchema = new mongoose.Schema({
   solution: String,
   equipmentDetails: String,
   remarks: String,
+  location: String,
 });
 
 const Report = mongoose.model('Report', reportSchema);
