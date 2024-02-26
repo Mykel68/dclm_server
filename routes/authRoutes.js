@@ -8,22 +8,20 @@ require('dotenv').config();
 const router = express.Router();
 const jwtSecret = process.env.JWT_SECRET;
 
-// Register a new user
+
+
 router.post('/register', async (req, res) => {
   try {
     const { name, password } = req.body;
 
-    // Check if the user already exists
     const existingUser = await User.findOne({ name });
 
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user
     const newUser = new User({
       name,
       password: hashedPassword,
@@ -38,27 +36,23 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login
 router.post('/login', async (req, res) => {
   try {
     const { name, password } = req.body;
 
-    // Check if the user exists
     const user = await User.findOne({ name });
 
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Check the password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    // Uncomment the following lines if you want to check the password
+    // const isPasswordValid = await bcrypt.compare(password, user.password);
+    // if (!isPasswordValid) {
+    //   return res.status(401).json({ message: 'Invalid credentials' });
+    // }
 
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    // Create and sign a JWT token
-    const token = jwt.sign({ user: { id: user.id } }, jwtSecret, { expiresIn: '1h' }); // Replace with your actual secret key
+    const token = jwt.sign({ user: { id: user.id } }, jwtSecret, { expiresIn: '1h' });
 
     res.json({ token });
   } catch (error) {

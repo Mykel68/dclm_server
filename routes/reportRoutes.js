@@ -9,7 +9,7 @@ router.get('/fetch-reports', reportController.fetchReports);
 router.post('/submit-report', reportController.submitReport);
 
 // Edit report (update)
-router.put('/edit-report/:reportId', reportController.editReport);
+router.put('/edit-report/:id', reportController.editReport);
 
 // Delete report
 router.delete('/delete-report/:id', reportController.deleteReport);
