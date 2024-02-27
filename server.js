@@ -4,20 +4,10 @@ const bodyParser = require("body-parser");
 const reportRoutes = require("./routes/reportRoutes");
 require("dotenv").config();
 const authRoutes = require("./routes/authRoutes");
-
-const corsOptions = {
-  origin: "http://localhost:3000", // Replace with your client's origin
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true, // enable set cookie
-  optionsSuccessStatus: 204,
-};
-
-app.use(cors(corsOptions));
+const cors = require("cors");
 
 const app = express();
 const port = process.env.PORT || 5002;
-app.use(cors());
-app.use(bodyParser.json());
 
 // Mongoose connection
 mongoose
@@ -31,6 +21,12 @@ mongoose
   .catch((err) => {
     console.log(err.message);
   });
+
+// Enable CORS for all routes
+app.use(cors());
+
+// Body parser middleware
+app.use(bodyParser.json());
 
 // Use reportRoutes for handling report-related routes
 app.use("/api", reportRoutes);
