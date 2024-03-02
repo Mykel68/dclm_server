@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const reportSchema = new mongoose.Schema({
   date: String,
@@ -9,13 +9,13 @@ const reportSchema = new mongoose.Schema({
   supervisor: String,
   personnelCount: Number,
   volunteersCount: Number,
-  challenges: String,
+  challenges: [String],
   solution: String,
   equipmentDetails: String,
   remarks: String,
   location: String,
 });
 
-const Report = mongoose.model('Report', reportSchema);
+const Report = mongoose.model("Report", reportSchema);
 
 module.exports = Report;

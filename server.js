@@ -22,16 +22,16 @@ mongoose
     console.log(err.message);
   });
 
-// Enable CORS for all routes
 app.use(cors());
-
-// Body parser middleware
 app.use(bodyParser.json());
-
-// Use reportRoutes for handling report-related routes
 app.use("/api", reportRoutes);
-
 app.use("/auth", authRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something went wrong!");
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
