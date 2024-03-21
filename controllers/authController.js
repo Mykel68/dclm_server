@@ -11,12 +11,12 @@ const jwtSecret = "de91f080dfbf6cbb2c9b6d7ef8";
 
 const register = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, section } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !section) {
       return res
         .status(400)
-        .json({ message: "Name, email, and password are required" });
+        .json({ message: "Name, email, password, and section are required" });
     }
 
     // Check if the email is already registered
@@ -25,12 +25,24 @@ const register = async (req, res, next) => {
       return res.status(400).json({ message: "Email is already registered" });
     }
 
+    // Determine the userType based on the selected section
+    let userType = "admin";
+    if (section === "Super_admin") {
+      userType = "super_admin";
+    }
+
     // Hash the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Create a new user
-    const newUser = new User({ name, email, password: hashedPassword });
+    // Create a new user with the determined userType
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      section,
+      userType,
+    });
     await newUser.save();
 
     res.status(201).json({ message: "User registered successfully" });
