@@ -17,6 +17,6 @@ router.put("/update-report/:id", reportController.updateReport);
 // Delete report
 router.delete("/delete-report/:id", reportController.deleteReport);
 
-router.post("/login", reportController.login);
+// router.post("/login", reportController.login);
 
 module.exports = router;

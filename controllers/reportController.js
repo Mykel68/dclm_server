@@ -92,40 +92,40 @@ const reportController = {
     }
   },
 
-  login: async (req, res, next) => {
-    try {
-      const { email, password } = req.body;
+  // login: async (req, res, next) => {
+  //   try {
+  //     const { email, password } = req.body;
 
-      // Check if the user with the provided email exists
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(401).json({ message: "Invalid credentials" });
-      }
+  //     // Check if the user with the provided email exists
+  //     const user = await User.findOne({ email });
+  //     if (!user) {
+  //       return res.status(401).json({ message: "Invalid credentials" });
+  //     }
 
-      // Check if the password is correct
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        return res.status(401).json({ message: "Incorrect Password" });
-      }
+  //     // Check if the password is correct
+  //     const isPasswordValid = await bcrypt.compare(password, user.password);
+  //     if (!isPasswordValid) {
+  //       return res.status(401).json({ message: "Incorrect Password" });
+  //     }
 
-      // Generate JWT token
-      const token = jwt.sign({ user: { email: user.email } }, jwtSecret, {
-        expiresIn: "1h",
-      });
+  //     // Generate JWT token
+  //     const token = jwt.sign({ user: { email: user.email } }, jwtSecret, {
+  //       expiresIn: "1h",
+  //     });
 
-      res.cookie("token", token, {
-        httpOnly: true,
-        sameSite: "none",
-        secure: true,
-      });
+  //     res.cookie("token", token, {
+  //       httpOnly: true,
+  //       sameSite: "none",
+  //       secure: true,
+  //     });
 
-      res.json({ token });
-    } catch (error) {
-      next(error);
-      console.error(error);
-      res.status(500).json({ message: "Internal Server Error" });
-    }
-  },
+  //     res.json({ token });
+  //   } catch (error) {
+  //     next(error);
+  //     console.error(error);
+  //     res.status(500).json({ message: "Internal Server Error" });
+  //   }
+  // },
 };
 
 module.exports = reportController;

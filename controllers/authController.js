@@ -3,16 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const cookieParser = require("cookie-parser");
-// const cors = require("cors");
 
 const app = express();
-// app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(cookieParser());
-
-// Enable CORS for all routes
-// app.use((req, res, next) => {
-//   next();
-// });
 
 const jwtSecret = "de91f080dfbf6cbb2c9b6d7ef8";
 
@@ -81,4 +74,24 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { register, login };
+const getAllAdmin = async (req, res, next) => {
+  try {
+    const admin = await User.find();
+    res.json(admin);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+const getAdminCount = async (req, res, next) => {
+  try {
+    const adminCount = await User.countDocuments({ userType: "admin" });
+    res.json(adminCount);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports = { register, login, getAllAdmin, getAdminCount };
