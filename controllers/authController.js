@@ -93,7 +93,7 @@ const login = async (req, res, next) => {
 const getAllAdmin = async (req, res, next) => {
   try {
     const admin = await User.find();
-    res.json(admin);
+    res.json({ admin });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -102,8 +102,8 @@ const getAllAdmin = async (req, res, next) => {
 
 const getAdminCount = async (req, res, next) => {
   try {
-    const adminCount = await User.countDocuments({ userType: "admin" });
-    res.json(adminCount);
+    const adminCount = await User.countDocuments({ userType: "Admin" });
+    res.json({ adminCount });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

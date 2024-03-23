@@ -94,8 +94,8 @@ const reportController = {
 
   getReportCount: async (req, res, next) => {
     try {
-      const adminCount = await Report.countDocuments();
-      res.json(adminCount);
+      const reportCount = await Report.countDocuments();
+      res.json({ reportCount });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
