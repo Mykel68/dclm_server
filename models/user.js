@@ -14,22 +14,21 @@ const userSchema = new mongoose.Schema({
       "Streaming",
       "Uplink",
       "Graphics",
-      "Super_admin",
+      "Super admin",
     ],
   },
   userType: {
     type: String,
     required: true,
-    enum: ["admin", "super_admin"],
+    enum: ["Admin", "Super admin"],
   },
 });
 
-// Pre-save middleware to set default userType based on selected section
 userSchema.pre("save", function (next) {
-  if (this.section === "Super_admin") {
-    this.userType = "super_admin";
+  if (this.section === "Super admin") {
+    this.userType = "Super admin";
   } else {
-    this.userType = "admin";
+    this.userType = "Admin";
   }
   next();
 });
