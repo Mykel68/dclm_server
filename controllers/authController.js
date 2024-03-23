@@ -67,8 +67,12 @@ const login = async (req, res, next) => {
       return res.status(401).json({ message: "Incorrect Password" });
     }
 
-    // Generate JWT token
-    const token = jwt.sign({ user: { email: user.email } }, jwtSecret, {
+    // Generate JWT token with userType included in payload
+    const tokenPayload = {
+      user: { email: user.email },
+      userType: user.userType,
+    };
+    const token = jwt.sign(tokenPayload, jwtSecret, {
       expiresIn: "1h",
     });
 
