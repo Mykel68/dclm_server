@@ -26,9 +26,9 @@ const register = async (req, res, next) => {
     }
 
     // Determine the userType based on the selected section
-    let userType = "admin";
-    if (section === "Super_admin") {
-      userType = "super_admin";
+    let userType = "Admin";
+    if (section === "Super admin") {
+      userType = "Super admin";
     }
 
     // Hash the password

@@ -5,6 +5,7 @@ const reportRoutes = require("./routes/reportRoutes");
 require("dotenv").config();
 const authRoutes = require("./routes/authRoutes");
 const cors = require("cors");
+const AdminReportRoutes = require("./routes/admin/reportRoutes");
 
 const app = express();
 const port = process.env.PORT || 5002;
@@ -24,8 +25,13 @@ mongoose
 
 app.use(cors());
 app.use(bodyParser.json());
+
+// Super_admin Routes
 app.use("/api", reportRoutes);
 app.use("/auth", authRoutes);
+
+//Admin routes
+app.use("/admin", AdminReportRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
