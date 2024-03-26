@@ -1,9 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const reportRoutes = require("./routes/reportRoutes");
+const reportRoutes = require("./routes/super_admin/reportRoutes");
 require("dotenv").config();
-const authRoutes = require("./routes/authRoutes");
+const authRoutes = require("./routes/super_admin/authRoutes");
 const cors = require("cors");
 const AdminReportRoutes = require("./routes/admin/reportRoutes");
 

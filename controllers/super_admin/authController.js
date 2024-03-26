@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+const User = require("../../models/user");
 const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -71,6 +71,7 @@ const login = async (req, res, next) => {
     const tokenPayload = {
       user: { email: user.email },
       userType: user.userType,
+      section: user.section,
     };
     const token = jwt.sign(tokenPayload, jwtSecret, {
       expiresIn: "1h",
@@ -92,7 +93,7 @@ const login = async (req, res, next) => {
 
 const getAllAdmin = async (req, res, next) => {
   try {
-    const admin = await User.find();
+    const admin = await User.find({ userType: "Admin" });
     res.json({ admin });
   } catch (error) {
     console.error(error);

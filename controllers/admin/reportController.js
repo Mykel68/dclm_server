@@ -5,6 +5,7 @@ const app = express();
 
 const getReport = async (req, res) => {
   try {
+    const { section } = req.params;
     const reports = await Report.find({ section });
     res.json(reports);
   } catch (error) {
@@ -15,12 +16,12 @@ const getReport = async (req, res) => {
 
 const getReportCount = async (req, res, next) => {
   try {
-    console.log("Request received:", req.params);
+    // console.log("Request received:", req.params);
     const { section } = req.params;
-    console.log("Section:", section);
+    // console.log("Section:", section);
 
     const reportCount = await Report.countDocuments({ section });
-    console.log("Report count:", reportCount);
+    // console.log("Report count:", reportCount);
 
     res.json({ reportCount });
   } catch (error) {
@@ -47,4 +48,28 @@ const editReport = async (req, res) => {
   }
 };
 
-module.exports = { getReport, editReport, getReportCount };
+const submitReport = async (req, res) => {
+  try {
+    // Assuming userType or section of the admin is available in the request
+    const { userType, section } = req;
+
+    // If you're using userType to determine the section
+    // const adminSection =
+    //   userType === "admin" ? "AdminSection" : "SuperAdminSection";
+
+    // If you have the section directly available in the request
+    // const adminSection = section;
+
+    // Assign the admin section to the reportData
+    const reportData = { ...req.body, section: adminSection };
+
+    const newReport = new Report(reportData);
+    await newReport.save();
+    res.status(201).json({ message: "Report submitted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports = { getReport, editReport, getReportCount, submitReport };

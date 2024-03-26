@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const reportController = require("../controllers/reportController");
+const reportController = require("../../controllers/super_admin/reportController");
 
 // Fetch reports
 router.get("/fetch-reports", reportController.fetchReports);
