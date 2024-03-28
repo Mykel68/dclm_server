@@ -3,11 +3,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../../models/user");
 const cookieParser = require("cookie-parser");
+require("dotenv").config();
 
 const app = express();
 app.use(cookieParser());
-
-const jwtSecret = "de91f080dfbf6cbb2c9b6d7ef8";
 
 const register = async (req, res, next) => {
   try {
@@ -73,7 +72,7 @@ const login = async (req, res, next) => {
       userType: user.userType,
       section: user.section,
     };
-    const token = jwt.sign(tokenPayload, jwtSecret, {
+    const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 

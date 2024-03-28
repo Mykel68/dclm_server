@@ -6,6 +6,7 @@ const app = express();
 const getReport = async (req, res) => {
   try {
     const { section } = req.params;
+
     const reports = await Report.find({ section });
     res.json(reports);
   } catch (error) {
