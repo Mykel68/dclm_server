@@ -6,6 +6,7 @@ require("dotenv").config();
 const authRoutes = require("./routes/super_admin/authRoutes");
 const cors = require("cors");
 const AdminReportRoutes = require("./routes/admin/reportRoutes");
+const uploadRoutes = require("./routes/route");
 
 const app = express();
 const port = process.env.PORT || 5002;
@@ -25,6 +26,9 @@ mongoose
 
 app.use(cors());
 app.use(bodyParser.json());
+
+// General routes
+app.use("/upload", uploadRoutes);
 
 // Super_admin Routes
 app.use("/api", reportRoutes);

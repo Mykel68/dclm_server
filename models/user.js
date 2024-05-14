@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     enum: ["Admin", "Super admin"],
   },
+  Image: {
+    type: String,
+  },
 });
 
 userSchema.pre("save", function (next) {

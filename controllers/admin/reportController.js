@@ -17,12 +17,9 @@ const getReport = async (req, res) => {
 
 const getReportCount = async (req, res, next) => {
   try {
-    // console.log("Request received:", req.params);
     const { section } = req.params;
-    // console.log("Section:", section);
 
     const reportCount = await Report.countDocuments({ section });
-    // console.log("Report count:", reportCount);
 
     res.json({ reportCount });
   } catch (error) {

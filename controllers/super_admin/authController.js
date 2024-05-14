@@ -68,9 +68,9 @@ const login = async (req, res, next) => {
 
     // Generate JWT token with userType included in payload
     const tokenPayload = {
-      user: { email: user.email },
       userType: user.userType,
       section: user.section,
+      id: user._id,
     };
     const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
       expiresIn: "1h",
@@ -109,5 +109,51 @@ const getAdminCount = async (req, res, next) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+const Profile = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const UserDetails = await User.findById(id);
+    if (!UserDetails) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(UserDetails);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
-module.exports = { register, login, getAllAdmin, getAdminCount };
+// const EditProfile = async (res, req) => {
+//   const { id } = req.params;
+//   try {
+//     const { name, password, Image } = req.body;
+
+//     const updateProfile = await Report.findByIdAndUpdate(
+//       { _id: id },
+//       {
+//         name,
+//         password,
+//         Image,
+//       },
+//       { new: true }
+//     );
+
+//     if (!updateProfile) {
+//       return res.status(404).json({ error: "Report not found" });
+//     }
+
+//     res.status(200).json(updateProfile);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
+
+module.exports = {
+  register,
+  login,
+  getAllAdmin,
+  getAdminCount,
+  Profile,
+  // EditProfile,
+};
